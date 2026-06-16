@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RADHIKA TRADING™ — SEBI Registered Research Analyst</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #1a6ef5;
+    --blue-light: #4d9fff;
+    --blue-dim: rgba(26,110,245,0.15);
+    --cyan: #00d4ff;
+    --green: #00e676;
+    --dark: #04060f;
+    --dark2: #080c1a;
+    --border: rgba(26,110,245,0.2);
+    --gold: #f0c040;
+    --muted: #6b7a99;
+    --text: #dce4f5;
+    --white: #f0f5ff;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 16px 10px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -5%, rgba(26,110,245,0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 35% at 90% 85%, rgba(0,212,255,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 30% at 5% 75%, rgba(26,110,245,0.06) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(26,110,245,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(26,110,245,0.03) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+
+  .card {
+    position: relative; z-index: 1;
+    width: 100%; max-width: 430px;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+  }
+
+  /* SEBI BADGE */
+  .sebi-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(26,110,245,0.1);
+    border: 1px solid rgba(26,110,245,0.3);
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 9.5px; font-weight: 600; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--blue-light);
+    margin-bottom: 14px;
+    animation: fadeDown 0.5s ease both;
+  }
+  .sebi-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  /* LOGO */
+  .logo-wrap {
+    position: relative; margin-bottom: 13px;
+    animation: fadeDown 0.6s 0.08s ease both;
+  }
+  .logo-wrap a { display: inline-block; text-decoration: none; }
+  .logo-img {
+    width: 104px; height: 104px;
+    border-radius: 50%; object-fit: cover;
+    border: 2.5px solid var(--blue);
+    box-shadow:
+      0 0 0 6px rgba(26,110,245,0.1),
+      0 0 0 12px rgba(0,212,255,0.05),
+      0 0 50px rgba(26,110,245,0.35),
+      0 0 90px rgba(0,212,255,0.1);
+    display: block;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .logo-wrap a:hover .logo-img {
+    transform: scale(1.06);
+    box-shadow: 0 0 70px rgba(26,110,245,0.55), 0 0 0 10px rgba(26,110,245,0.14);
+  }
+  .logo-wrap::before {
+    content: '';
+    position: absolute; inset: -10px; border-radius: 50%;
+    border: 1.5px dashed rgba(26,110,245,0.3);
+    animation: spin 13s linear infinite;
+    pointer-events: none;
+  }
+  .logo-wrap::after {
+    content: '';
+    position: absolute; inset: -20px; border-radius: 50%;
+    border: 1px dotted rgba(0,212,255,0.12);
+    animation: spin 20s linear infinite reverse;
+    pointer-events: none;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* BRAND */
+  .brand {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(26px, 8.5vw, 44px);
+    font-weight: 700; line-height: 1;
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 3px;
+    animation: fadeUp 0.55s 0.25s ease both;
+  }
+  .brand .b1 { color: var(--white); }
+  .brand .b2 { color: var(--blue-light); }
+  .brand .tm { font-size: 0.5em; vertical-align: super; color: var(--muted); }
+
+  .subscribers {
+    font-size: 11px; color: var(--muted); letter-spacing: 1px;
+    margin-bottom: 10px;
+    animation: fadeUp 0.55s 0.3s ease both;
+  }
+  .subscribers strong { color: var(--cyan); }
+
+  /* LICENSE PILL */
+  .lic-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,230,118,0.08);
+    border: 1px solid rgba(0,230,118,0.22);
+    border-radius: 100px; padding: 5px 13px;
+    font-size: 10px; font-weight: 500; letter-spacing: 1.5px;
+    color: var(--green); margin-bottom: 10px;
+    animation: fadeUp 0.55s 0.34s ease both;
+  }
+  .lic-pill span { color: rgba(0,230,118,0.6); }
+
+  /* BIO */
+  .bio {
+    font-size: 12px; color: var(--muted);
+    line-height: 1.7; margin-bottom: 14px;
+    padding: 0 6px;
+    animation: fadeUp 0.55s 0.38s ease both;
+  }
+  .bio strong { color: var(--blue-light); font-weight: 500; }
+  .bio .hi { color: var(--gold); }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%; display: flex; align-items: center; gap: 10px;
+    margin-bottom: 11px;
+    animation: fadeUp 0.55s 0.42s ease both;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+  .divider-orn { font-size: 13px; color: var(--blue); }
+
+  /* STATS */
+  .stats {
+    display: grid; grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    width: 100%;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    margin-bottom: 10px;
+    animation: fadeUp 0.55s 0.46s ease both;
+  }
+  .sdiv { background: var(--border); }
+  .stat { padding: 13px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .snum {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 21px; font-weight: 700; line-height: 1;
+  }
+  .sc { color: var(--cyan); }
+  .sg { color: var(--green); }
+  .sb { color: var(--blue-light); }
+  .slbl { font-size: 8.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+
+  /* FEATURES */
+  .features {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px; width: 100%;
+    margin-bottom: 10px;
+    animation: fadeUp 0.55s 0.52s ease both;
+  }
+  .feat {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.055);
+    border-radius: 12px; padding: 13px 5px 10px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    position: relative; overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .feat::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2.5px;
+  }
+  .feat.fa::before { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+  .feat.fb::before { background: linear-gradient(90deg, #f0c040, #ffdd70); }
+  .feat.fc::before { background: linear-gradient(90deg, var(--green), #60ffa0); }
+  .feat:hover { transform: translateY(-4px); border-color: rgba(26,110,245,0.22); }
+  .feat-icon { font-size: 21px; }
+  .feat-lbl { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); line-height: 1.55; text-align: center; }
+
+  /* TRUST */
+  .trust {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 4px 14px;
+    font-size: 10.5px; color: var(--muted);
+    margin-bottom: 14px;
+    animation: fadeUp 0.55s 0.6s ease both;
+  }
+  .ti { display: flex; align-items: center; gap: 5px; }
+  .tdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .tdb { background: var(--blue-light); }
+  .tdc { background: var(--cyan); }
+  .tdg { background: var(--green); }
+
+  /* CTA */
+  .cta-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; width: 100%;
+    background: linear-gradient(135deg, #0d4fd4 0%, #1a6ef5 45%, #4d9fff 100%);
+    background-size: 200% auto;
+    color: #fff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: clamp(15px, 4.5vw, 19px);
+    font-weight: 700; letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 40px rgba(26,110,245,0.4), 0 2px 10px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.5s ease;
+    animation: fadeUp 0.55s 0.7s ease both;
+    position: relative; overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .cta-btn::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 55%);
+    pointer-events: none;
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 60px rgba(26,110,245,0.55);
+    background-position: right center;
+  }
+  .cta-btn:active { transform: translateY(0); }
+  .tg-icon { width: 20px; height: 20px; flex-shrink: 0; fill: #fff; }
+
+  .cta-note {
+    font-size: 10px; color: rgba(107,122,153,0.5);
+    margin-bottom: 10px; letter-spacing: 0.5px;
+    animation: fadeUp 0.55s 0.78s ease both;
+  }
+
+  .credit {
+    font-size: 10px; color: rgba(107,122,153,0.38);
+    letter-spacing: 0.5px;
+    animation: fadeUp 0.55s 0.84s ease both;
+  }
+  .credit a { color: rgba(26,110,245,0.5); text-decoration: none; transition: color 0.2s ease; }
+  .credit a:hover { color: var(--blue-light); }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 380px) {
+    .brand { font-size: 24px; }
+    .logo-img { width: 88px; height: 88px; }
+    .cta-btn { font-size: 14px; padding: 13px 12px; letter-spacing: 1.5px; }
+    .feat { padding: 10px 4px 8px; }
+  }
+  @media (max-height: 720px) {
+    .sebi-badge { margin-bottom: 9px; }
+    .logo-img { width: 84px; height: 84px; }
+    .logo-wrap { margin-bottom: 9px; }
+    .brand { font-size: 24px; }
+    .bio { margin-bottom: 10px; }
+    .stats { margin-bottom: 8px; }
+    .stat { padding: 10px 6px; }
+    .features { margin-bottom: 8px; }
+    .feat { padding: 10px 4px 8px; }
+    .feat-icon { font-size: 18px; }
+    .trust { margin-bottom: 10px; }
+    .cta-btn { padding: 13px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- SEBI VERIFIED -->
+  <div class="sebi-badge">
+    <div class="dot"></div>
+    SEBI Registered Research Analyst
+  </div>
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <a href="https://t.me/+I1nNmGC7RHZlZjFl" target="_blank" rel="noopener">
+      <img class="logo-img" src="https://fantasticczone.site/wp-content/uploads/2026/05/rraddhika.jpg" alt="Radhika Trading" />
+    </a>
+  </div>
+
+  <!-- BRAND -->
+  <div class="brand">
+    <span class="b1">RADHIKA </span><span class="b2">TRADING</span><span class="tm">™</span>
+  </div>
+
+  <div class="subscribers"><strong>31,025</strong> Subscribers</div>
+
+  <!-- LICENSE -->
+  <div class="lic-pill">
+    🔖 License: <span>INH000018090</span>
+  </div>
+
+  <!-- BIO -->
+  <p class="bio">
+    <span class="hi">💸</span> <strong>Intraday Trader · Investor · Mentor</strong><br/>
+    📊 Equity, <strong>Nifty</strong> &amp; <strong>Banknifty</strong> Options Expert<br/>
+    🏆 <strong>5+ Years</strong> of proven market experience
+  </p>
+
+  <div class="divider"><span class="divider-orn">◈</span></div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <span class="snum sc">5+</span>
+      <span class="slbl">Yrs Exp</span>
+    </div>
+    <div class="sdiv"></div>
+    <div class="stat">
+      <span class="snum sg">31K+</span>
+      <span class="slbl">Members</span>
+    </div>
+    <div class="sdiv"></div>
+    <div class="stat">
+      <span class="snum sb">Daily</span>
+      <span class="slbl">Calls</span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="feat fa">
+      <span class="feat-icon">📡</span>
+      <span class="feat-lbl">Live<br/>Signals</span>
+    </div>
+    <div class="feat fb">
+      <span class="feat-icon">📊</span>
+      <span class="feat-lbl">Market<br/>Analysis</span>
+    </div>
+    <div class="feat fc">
+      <span class="feat-icon">🎯</span>
+      <span class="feat-lbl">Intraday<br/>Calls</span>
+    </div>
+  </div>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="ti"><div class="tdot tdb"></div>SEBI Verified</div>
+    <div class="ti"><div class="tdot tdc"></div>Nifty &amp; BankNifty</div>
+    <div class="ti"><div class="tdot tdg"></div>Free to Join</div>
+  </div>
+
+  <!-- CTA -->
+  <a href="https://t.me/+I1nNmGC7RHZlZjFl" target="_blank" rel="noopener" class="cta-btn">
+    <svg class="tg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+    </svg>
+    JOIN FREE — TELEGRAM
+  </a>
+
+  <p class="cta-note">SEBI Reg. · Real Calls · 31,000+ Traders Trust Us</p>
+
+  <!-- CREDIT -->
+  <p class="credit">Ads by <a href="https://t.me/+TRlJl628l-FkMWE9" target="_blank" rel="noopener">@Nexgroww_agency</a></p>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '989170353976777');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=989170353976777&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+</div>
+</body>
+</html>
